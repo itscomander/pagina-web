@@ -1,0 +1,180 @@
+<!DOCTYPE html> 
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>¡Felicidades! 🎉</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background: linear-gradient(135deg, #f3e5f5, #e1bee7);
+            margin: 0;
+            padding: 30px;
+            color: #6a1b9a;
+        }
+
+        h1 {
+            color: #4a148c;
+            font-size: 2.5em;
+        }
+
+        .opciones {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            max-width: 800px;
+            margin: 20px auto;
+        }
+
+        .opcion {
+            padding: 15px;
+            cursor: pointer;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s, background-color 0.3s;
+        }
+
+        .opcion img {
+            width: 100%;
+            border-radius: 10px;
+        }
+
+        .opcion:hover {
+            transform: scale(1.05);
+            background-color: #ab47bc;
+        }
+
+        .mensaje {
+            display: none;
+            margin-top: 20px;
+            font-size: 1.8em;
+            color: #2e7d32;
+        }
+
+        .boton-regalo {
+            display: none;
+            margin: 20px;
+            padding: 10px 20px;
+            background-color: #7e57c2;
+            color: white;
+            font-size: 1.2em;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+
+        .boton-regalo:hover {
+            background-color: #5e35b1;
+            transform: scale(1.1);
+        }
+
+        .galeria-regalos {
+            display: none;
+            margin-top: 20px;
+        }
+
+        .galeria-regalos img {
+            width: 150px;
+            margin: 10px;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: transform 0.3s;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .galeria-regalos img:hover {
+            transform: scale(1.15);
+        }
+    </style>
+</head>
+<body>
+    <h1>¡Felicidades! 🎉</h1>
+    <p>Selecciona 3 opciones correctas de las siguientes 8:</p>
+
+    <div class="opciones" id="contenedor-opciones">
+        <!-- Las opciones se generarán aquí por JavaScript -->
+    </div>
+
+    <p class="mensaje" id="mensaje-acierto">¡Haz acertado las 3 opciones! 🎉</p>
+
+    <button class="boton-regalo" id="boton-regalo">Elige tu regalo ✨</button>
+
+    <div class="galeria-regalos" id="galeria-regalos">
+        <img src="https://m.media-amazon.com/images/I/4149bY8afjL._AC_SX679_.jpg" alt="Regalo 1">
+        <img src="https://www.ikea.com/es/es/images/products/malm-comoda-6-cajones-blanco-espejo__0484887_pe621351_s5.jpg?f=xl" alt="Regalo 2">
+        <img src="https://static.bershka.net/assets/public/88e9/48fd/5a154708bc0d/b034b9748fe7/06633407800-p/06633407800-p.jpg?ts=1729689259575&w=800" alt="Regalo 3">
+        <img src="https://www.123tinta.es/image/Fujifilm_instax_mini_12_c%C3%A1mara_instant%C3%A1nea_rosa_pastel_16806107_150856_m8_big.jpg" alt="Regalo 4">
+    </div>
+
+    <script>
+        const opcionesCorrectas = [2, 5, 7]; // Las posiciones correctas
+        const maxSeleccionadas = 3;
+        let seleccionadas = [];
+
+        // Generar botones de opciones con imágenes
+        const contenedor = document.getElementById("contenedor-opciones");
+        const imagenesOpciones = [
+            "https://www.dragonoriental.com/980-large_default/coca-cola-zero-330ml.jpg",
+            "https://i.blogs.es/ed843e/superpc-ap/1366_2000.jpeg",
+            "https://image.spreadshirtmedia.net/image-server/v1/products/T1459A839MPA4459PT28D318472845W10000H5275/views/1,width=800,height=800,appearanceId=839,backgroundColor=F2F2F2/amo-a-mi-ex-pegatina.jpg",
+            "https://youtalkonline.com/wp-content/uploads/Dulces-en-ingles.jpg",
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQxCTNkqiOEv9qf1-SA2aLqQIxWOvr36tDRKA&s",
+            "https://uddingstonphysiotherapy.co.uk/wp-content/uploads/bb-plugin/cache/uddingstron-physiotherapy-gym-img-9-portrait-1e856601c1a25da61670f43d981990f1-3j0rgliwn8uf.jpg",
+            "https://upload.wikimedia.org/wikipedia/commons/thumb/2/24/LEGO_logo.svg/800px-LEGO_logo.svg.png",
+            "https://www.naturalcastello.com/wp-content/uploads/2019/08/pescados-tipos-propiedades.jpg"
+        ];
+
+        for (let i = 0; i < 8; i++) {
+            const opcion = document.createElement("div");
+            opcion.classList.add("opcion");
+
+            const img = document.createElement("img");
+            img.src = imagenesOpciones[i];
+            img.alt = `Opcion ${i + 1}`;
+
+            opcion.appendChild(img);
+            opcion.dataset.valor = i + 1;
+            opcion.onclick = manejarSeleccion;
+            contenedor.appendChild(opcion);
+        }
+
+        function manejarSeleccion() {
+            const valor = parseInt(this.dataset.valor);
+
+            // Evitar selección repetida
+            if (seleccionadas.includes(valor)) return;
+
+            this.style.backgroundColor = "#4caf50";
+            seleccionadas.push(valor);
+
+            if (seleccionadas.length === maxSeleccionadas) {
+                verificarAciertos();
+            }
+        }
+
+        function verificarAciertos() {
+            const aciertos = seleccionadas.filter(val => opcionesCorrectas.includes(val));
+            if (aciertos.length === maxSeleccionadas) {
+                document.getElementById("mensaje-acierto").style.display = "block";
+                document.getElementById("boton-regalo").style.display = "block";
+            } else {
+                alert("Lo siento, no has acertado las 3 opciones. Inténtalo de nuevo.");
+                reiniciarJuego();
+            }
+        }
+
+        function reiniciarJuego() {
+            seleccionadas = [];
+            document.querySelectorAll(".opcion").forEach(opcion => {
+                opcion.style.backgroundColor = "";
+            });
+        }
+
+        document.getElementById("boton-regalo").onclick = () => {
+            document.getElementById("galeria-regalos").style.display = "block";
+        };
+    </script>
+</body>
+</html>

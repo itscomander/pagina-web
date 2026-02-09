@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>¿Quieres ser mi San Valentín? 💖</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background: linear-gradient(120deg, #ffcccc, #ff99cc, #ff6699);
+            margin: 0;
+            padding: 50px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        h1 {
+            color: #ff4d4d;
+            font-size: 2.5em;
+            animation: latidos 1.5s infinite, brillo 2s infinite alternate;
+            text-shadow: 0 0 10px rgba(255, 77, 77, 0.8);
+        }
+
+        @keyframes latidos {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes brillo {
+            0% { text-shadow: 0 0 10px rgba(255, 77, 77, 0.8); }
+            100% { text-shadow: 0 0 20px rgba(255, 77, 77, 1); }
+        }
+
+        .mensaje {
+            font-size: 1.5em;
+            color: #cc0000;
+            margin: 20px;
+            animation: brillo 2s infinite alternate;
+        }
+
+        .botones {
+            margin-top: 20px;
+        }
+
+        button {
+            font-size: 1.2em;
+            padding: 10px 20px;
+            margin: 10px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .si {
+            background-color: #ff4d4d;
+            color: white;
+            box-shadow: 0 4px 8px rgba(255, 77, 77, 0.5);
+        }
+
+        .si:hover {
+            background-color: #cc0000;
+            transform: scale(1.1);
+            box-shadow: 0 6px 12px rgba(255, 77, 77, 0.8);
+        }
+
+        .no {
+            background-color: #999;
+            color: white;
+            position: absolute;
+        }
+
+        .gato {
+            width: 250px;
+            margin-top: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(255, 77, 77, 0.6);
+            transition: transform 0.3s;
+        }
+
+        .gato:hover {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        /* Estilos para los corazones */
+        .corazon {
+            position: absolute;
+            color: red;
+            font-size: 30px;
+            animation: caer 4s linear infinite;
+        }
+
+        @keyframes caer {
+            0% {
+                transform: translateY(0vh) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Hola, mi amor ❤️</h1>
+    <p class="mensaje">Eres lo mejor que me ha pasado. Quería preguntarte algo muy especial...</p>
+    <p class="mensaje"><b>¿Quieres ser mi San Valentín? 🖤</b></p>
+
+    <img class="gato" src="C:\Users\caval\Pictures\meme-de-gato.webp" alt="Gato tierno">
+    <br>
+    <img class="gato" src="C:\Users\caval\Pictures\gato_meme.webp" alt="Gato enamorado">
+
+    <div class="botones">
+        <button class="si" onclick="aceptar()">Sí, claro! 💖</button>
+        <button class="no" onmouseover="moverBoton(this)">No 😢</button>
+    </div>
+
+    <script>
+        function aceptar() {
+            alert("¡Sabía que dirías que sí! Te amo muchísimo 💕😍");
+            window.location.href = "felicidades.html"; // Redirige a la nueva página
+        }
+
+        function moverBoton(boton) {
+            let x = Math.random() * (window.innerWidth - boton.offsetWidth);
+            let y = Math.random() * (window.innerHeight - boton.offsetHeight);
+            boton.style.left = `${x}px`;
+            boton.style.top = `${y}px`;
+        }
+
+        // Función para crear los corazones en la pantalla
+        function crearCorazones() {
+            const corazon = document.createElement("div");
+            corazon.innerHTML = "❤️";
+            corazon.classList.add("corazon");
+
+            corazon.style.left = Math.random() * 100 + "vw";
+            corazon.style.top = "0"; // Comienza desde el inicio del body
+            corazon.style.animationDuration = Math.random() * 3 + 2 + "s";
+
+            document.body.appendChild(corazon);
+
+            setTimeout(() => {
+                corazon.remove();
+            }, 4000);
+        }
+
+        // Inicia la lluvia de corazones desde el body visible
+        setInterval(crearCorazones, 300);
+    </script>
+</body>
+</html>
